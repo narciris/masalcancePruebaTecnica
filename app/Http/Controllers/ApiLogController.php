@@ -12,6 +12,10 @@ class ApiLogController extends Controller
     {
         try{
         $logs = ApiLog::all();
+        $logs->transform(function($log){
+            $log->data = array_slice($log->data, 0, 3);
+            return $log;
+        });
         return response()->json($logs);
         }catch (\Exception $exception){
             return response()->json($exception->getMessage());
@@ -52,7 +56,8 @@ class ApiLogController extends Controller
                 return response()->json(['Error'=>'No se encuentra el registro'],404);
             }
             $dataRequest = $request->validated();
-            ApiLog::update($id,$dataRequest);
+            ApiLog::updated($id);
+            return response()->json($dataRequest,200);
         }catch (\Exception $exception){
             return response()->json($exception->getMessage());
         }

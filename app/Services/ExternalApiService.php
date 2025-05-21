@@ -50,7 +50,7 @@ class ExternalApiService
         $endpoint = '/users/' . $id . '/posts';
         $res = Http::get($this->BASE_URL . $endpoint);
         $data  = $res->json();
-        event(new ApiRequest('GET',json_encode($data)));
+        event(new ApiRequest('GET',($data)));
         return $data;
     }
 

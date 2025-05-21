@@ -20,6 +20,9 @@ Route::get('/users',[UserController::class,'index'])->name('users');
 Route::get('/logs',[ApiLogController::class,'index'])->name('logs');
 Route::get('/post',[ExternalApiController::class,'getPost'])->name('post');
 Route::get('/posts/user/{id}',[ExternalApiController::class,'postByUserId'])->name('post.user');
+Route::post('/logs',[ApiLogController::class,'store'])->name('logs.store');
+Route::patch('/logs/{id}',[ApiLogController::class,'update'])->name('logs.update');
+Route::delete('/logs/{id}',[ApiLogController::class,'destroy'])->name('logs.destroy');
 Route::get('/posts/{id}',[ExternalApiController::class,'getPostById'])->name('posts_id');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -23,9 +23,39 @@ Content-Type: application/json
 
 ### editar
 
+PATCH http://localhost:8000/api/logs/14
+Accept: application/json
+Content-Type: application/json
+
+{
+    "method": "DELETE",
+    "data": [
+        {"user_id": 1, "name": "Gregorio"}
+    ]
+}
+
+### crear un log
+
+POST http://localhost:8000/api/logs
+Accept: application/json
+Content-Type: application/json
+
+{
+    "method": "POST",
+    "data": [
+        {"user_id": 1, "name": "Gregorio"}
+    ]
+}
+
 
 ### Post by userID
 
 GET http://localhost:8000/api/posts/user/1
+Accept: application/json
+Content-Type: application/json
+
+### borrar log
+
+DELETE  http://localhost:8000/api/logs/100
 Accept: application/json
 Content-Type: application/json

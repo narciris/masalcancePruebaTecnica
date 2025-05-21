@@ -15,4 +15,9 @@ class ApiLog extends Model
         'date',
         'data'
     ];
+
+    protected $casts = [
+        'data' => 'array',
+    ];
+
 }

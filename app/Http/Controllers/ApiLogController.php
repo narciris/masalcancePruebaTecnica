@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ApiLogsCreate;
 use App\Models\ApiLog;
-use Illuminate\Http\Request;
 
 class ApiLogController extends Controller
 {
@@ -12,10 +11,6 @@ class ApiLogController extends Controller
     {
         try{
         $logs = ApiLog::all();
-        $logs->transform(function($log){
-            $log->data = array_slice($log->data, 0, 3);
-            return $log;
-        });
         return response()->json($logs);
         }catch (\Exception $exception){
             return response()->json($exception->getMessage());

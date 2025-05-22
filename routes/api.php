@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlbumControllers;
 use App\Http\Controllers\ApiLogController;
 use App\Http\Controllers\ExternalApiController;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,7 @@ Route::post('/logs',[ApiLogController::class,'store'])->name('logs.store');
 Route::patch('/logs/{id}',[ApiLogController::class,'update'])->name('logs.update');
 Route::delete('/logs/{id}',[ApiLogController::class,'destroy'])->name('logs.destroy');
 Route::get('/posts/{id}',[ExternalApiController::class,'getPostById'])->name('posts_id');
+Route::get('/user/{id}/albums',[AlbumControllers::class,'getAlbums'])->name('user.albums');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

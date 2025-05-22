@@ -54,6 +54,16 @@ class ExternalApiService
         return $data;
     }
 
+    public function getAlbums($id)
+    {
+        $endpoint = '/users/'  . $id . '/albums';
+        $res = Http::get($this->BASE_URL . $endpoint);
+        $data  = $res->json();
+        event(new ApiRequest('GET',($data)));
+        return $data;
+
+    }
+
 
 
 

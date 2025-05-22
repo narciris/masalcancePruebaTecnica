@@ -1,67 +1,172 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto consiste en consumir datos desde la API pública de JSONPlaceholder utilizando Laravel, registrar cada consumo como un log en una base de datos y permitir gestionar dichos registros (crear, editar, eliminar y listar).
 
-## About Laravel
+Se implementó un servicio HTTP personalizado para realizar peticiones HTTP externas desde Laravel y registrar cada interacción en una tabla `api_logs`. También se implementó un sistema básico de manejo de errores y rutas API RESTful.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Endpoints Disponibles
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Obtener Usuarios
 
-## Learning Laravel
+```
+GET /api/users
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Obtiene una lista de usuarios desde JSONPlaceholder.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Obtener Logs
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+GET /api/logs
+```
 
-## Laravel Sponsors
+Lista todos los logs almacenados en la base de datos.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Obtener Publicaciones
 
-### Premium Partners
+```
+GET /api/post
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Obtiene una lista de publicaciones.
 
-## Contributing
+### Obtener Publicación por ID
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+GET /api/posts/{id}
+```
 
-## Code of Conduct
+Ejemplo:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+GET /api/posts/5
+```
 
-## Security Vulnerabilities
+### Crear un Log
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+POST /api/logs
+```
 
-## License
+Body de ejemplo:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# masalcancePruebaTecnica
+```json
+{
+  "method": "POST",
+  "data": [
+    {"user_id": 1, "name": "Gregorio"}
+  ]
+}
+```
+
+### Editar un Log
+
+```
+PATCH /api/logs/{id}
+```
+
+Ejemplo:
+
+```json
+{
+  "method": "DELETE",
+  "data": [
+    {"user_id": 1, "name": "Gregorio"}
+  ]
+}
+```
+
+### Borrar un Log
+
+```
+DELETE /api/logs/{id}
+```
+
+### Obtener Publicaciones por User ID
+
+```
+GET /api/posts/user/{id}
+```
+
+### Obtener Álbumes por ID de Usuario
+
+```
+GET /api/user/{id}/albums
+```
+
+---
+
+## Uso del Cliente HTTP en Laravel
+
+Laravel proporciona la clase `Http` que forma parte de Laravel HTTP Client, introducido en Laravel 7+. Esta clase permite realizar solicitudes externas de manera limpia y manejable.
+
+### ¿Por qué usamos `Http`?
+
+* Sintaxis sencilla y fluida.
+* Manejo elegante de respuestas.
+* Soporte para pruebas.
+* Integración nativa con Laravel.
+
+Ejemplo de uso:
+
+```php
+$response = Http::get('https://jsonplaceholder.typicode.com/posts');
+```
+
+Este cliente fue encapsulado en un **servicio personalizado** que se inyecta en los controladores para facilitar el mantenimiento y pruebas.
+
+---
+
+## Manejo de Errores
+
+Todas las peticiones externas están protegidas con `try-catch` para capturar errores y devolver respuestas amigables en caso de fallos de conexión u otros errores.
+
+Ejemplo:
+
+```php
+try {
+  $response = Http::get($url);
+} catch (Exception $e) {
+  return response()->json(['error' => $e->getMessage()], 500);
+}
+```
+
+---
+
+## Rutas API
+
+Las rutas de esta aplicación están definidas en el archivo `routes/api.php`, utilizando los métodos HTTP apropiados (`GET`, `POST`, `PATCH`, `DELETE`).
+
+Ejemplo:
+
+```php
+Route::get('/logs', [LogController::class, 'index']);
+```
+
+---
+
+## Migración de la Tabla `api_logs`
+
+Se creó una migración para la tabla `api_logs`, que incluye los siguientes campos:
+
+```php
+Schema::create('api_logs', function (Blueprint $table) {
+  $table->id();
+  $table->string('method');
+  $table->json('data');
+  $table->timestamp('date')->useCurrent();
+  $table->timestamps();
+});
+```
+
+* `method`: método HTTP utilizado (`GET`, `POST`, etc.)
+* `data`: datos enviados o recibidos
+* `date`: fecha y hora de la acción
+* `timestamps`: incluye `created_at` y `updated_at`
+
+---
+
+## Conclusión
+
+Este proyecto integra buenas prácticas en el consumo de servicios externos con Laravel, persistencia de logs para auditoría, y un enfoque limpio usando servicios, controladores y migraciones. La elección del cliente `Http` permite una gestión eficiente y clara de las solicitudes externas, con manejo de errores y trazabilidad a través de los registros almacenados.

@@ -10,20 +10,26 @@ class ApiLogController extends Controller
     public function index()
     {
         try{
-        $logs = ApiLog::all();
+            $logs = ApiLog::all()->map(function ($log) {
+                $data = is_array($log->data) ? $log->data : (is_iterable($log->data) ? iterator_to_array($log->data) : []);                $log->data = array_slice($data, 0, 2);
+             return $log;
+            });
+
         return response()->json($logs);
-        }catch (\Exception $exception){
+        }
+        catch (\Exception $exception){
             return response()->json($exception->getMessage());
         }
+
     }
 
     public function store(ApiLogsCreate $request)
     {
         try {
             $dataRequest = $request->validated();
-            ApiLog::create($dataRequest);
-        return response()->json($dataRequest,200);
-        }catch (\Exception $exception){
+            $log = ApiLog::create($dataRequest);
+            return response()->json($log, 200);
+        } catch (\Exception $exception) {
             return response()->json($exception->getMessage());
         }
 
@@ -58,4 +64,22 @@ class ApiLogController extends Controller
         }
 
     }
+
+
+    public function destroyAll()
+    {
+        try {
+            ApiLog::truncate();
+
+            return response()->json([
+                'message' => 'Todos los registros fueron eliminados correctamente.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al eliminar los registros.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

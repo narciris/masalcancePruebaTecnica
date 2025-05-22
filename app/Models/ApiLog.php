@@ -11,9 +11,11 @@ class ApiLog extends Model
     protected $table = 'api_logs';
 
     protected $fillable = [
+        'id',
         'method',
-        'date',
-        'data'
+        'data',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

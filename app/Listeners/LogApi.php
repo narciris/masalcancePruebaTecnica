@@ -29,7 +29,6 @@ class LogApi
     {
         ApiLog::create([
             'method' => $event->method,
-            'date' => now(),
             'data'=> $event->data,
         ]);
     }

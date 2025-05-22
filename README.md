@@ -109,24 +109,7 @@ Laravel proporciona la clase `Http` que forma parte de Laravel HTTP Client, intr
 * Integración nativa con Laravel.
 
 Ejemplo de uso:
-
-```php
-$response = Http::get('https://jsonplaceholder.typicode.com/posts');
-```
-
-Este cliente fue encapsulado en un **servicio personalizado** que se inyecta en los controladores para facilitar el mantenimiento y pruebas.
-
----
-
-## Manejo de Errores
-
-Todas las peticiones externas están protegidas con `try-catch` para capturar errores y devolver respuestas amigables en caso de fallos de conexión u otros errores.
-
-Ejemplo:
-
-```php
-try {
-  $response = Http::get($url);
+ sponse = Http::get($url);
 } catch (Exception $e) {
   return response()->json(['error' => $e->getMessage()], 500);
 }

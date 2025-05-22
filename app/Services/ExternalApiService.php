@@ -20,7 +20,7 @@ class ExternalApiService
             $endpoint = '/users';
             $res = Http::get($this->BASE_URL . $endpoint);
             $data  = $res->json();
-            event(new ApiRequest('GET',json_encode($data)));
+            event(new ApiRequest('GET',($data)));
             return $data;
         } catch (\Exception $e) {
             return  response()->json(['error' => $e->getMessage()]);
@@ -32,7 +32,7 @@ class ExternalApiService
         $endpoint = '/posts';
         $res = Http::get($this->BASE_URL . $endpoint);
         $data  = $res->json();
-        event(new ApiRequest('GET',json_encode($data)));
+        event(new ApiRequest('GET',($data)));
         return $data;
     }
 
@@ -41,7 +41,7 @@ class ExternalApiService
         $endpoint = '/posts/' . $id;
         $res = Http::get($this->BASE_URL . $endpoint);
         $data  = $res->json();
-        event(new ApiRequest('GET',json_encode($data)));
+        event(new ApiRequest('GET',($data)));
         return $data;
     }
 

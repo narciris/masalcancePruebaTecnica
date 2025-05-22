@@ -43,7 +43,7 @@ Content-Type: application/json
 {
     "method": "POST",
     "data": [
-        {"user_id": 1, "name": "Gregorio"}
+        {"user_id": 8, "name": "sdfghjkkj"}
     ]
 }
 
@@ -56,7 +56,7 @@ Content-Type: application/json
 
 ### borrar log
 
-DELETE  http://localhost:8000/api/logs/100
+DELETE  http://localhost:8000/api/logs/45
 Accept: application/json
 Content-Type: application/json
 
@@ -65,3 +65,9 @@ Content-Type: application/json
 GET  http://localhost:8000/api/user/2/albums
 Accept: application/json
 Content-Type: application/json
+
+
+### ELiminar todos los logs
+
+DELETE http://localhost:8000/api/logs
+Accept: application/json
